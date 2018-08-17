@@ -11,8 +11,8 @@ RUN apt-get update \
 	&& localedef -i en_GB -c -f UTF-8 -A /usr/share/locale/locale.alias en_GB.UTF-8
 
 # install Postgres etc
-#ENV POSTGRES_VERSION 10
-ENV POSTGRES_VERSION 9.6
+ENV POSTGRES_VERSION 10
+#ENV POSTGRES_VERSION 9.6
 RUN apt-get update \
     && apt-get install --no-install-recommends -y build-essential gosu gnupg cmake ca-certificates wget bzip2 \
     && touch /etc/apt/sources.list.d/pgdg.list \
