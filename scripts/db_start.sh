@@ -97,23 +97,37 @@ EOF
         fi
     fi
 
-    # SEE http://pgtune.leopard.in.ua -> presently based on 4GB, 4CPU, HDD, mixed purpose at 50 max connections
+    # SEE http://pgtune.leopard.in.ua -> presently based on 64GB, 8CPU, HDD, mixed purpose at 42 max connections
+        # max_connections = 42
+        #shared_buffers = 16GB
+        #effective_cache_size = 48GB
+        #maintenance_work_mem = 2GB
+        #checkpoint_completion_target = 0.7
+        #wal_buffers = 16MB
+        #default_statistics_target = 100
+        #random_page_cost = 4
+        #effective_io_concurrency = 2
+        #work_mem = 99864kB
+        #min_wal_size = 1GB
+        #max_wal_size = 2GB
+        #max_worker_processes = 8
+        #max_parallel_workers_per_gather = 4
     gosu postgres psql -v ON_ERROR_STOP=1 << EOF
-        ALTER SYSTEM SET max_connections = '50';
-        ALTER SYSTEM SET shared_buffers = '1GB';
-        ALTER SYSTEM SET effective_cache_size = '3GB';
-        ALTER SYSTEM SET work_mem = '10485kB';
-        ALTER SYSTEM SET maintenance_work_mem = '256MB';
+        ALTER SYSTEM SET max_connections = '42';
+        ALTER SYSTEM SET shared_buffers = '16GB';
+        ALTER SYSTEM SET effective_cache_size = '48GB';
+        ALTER SYSTEM SET work_mem = '99864kB';
+        ALTER SYSTEM SET maintenance_work_mem = '2GB'; #2GB->8GB ?
         ALTER SYSTEM SET min_wal_size = '1GB';
         ALTER SYSTEM SET max_wal_size = '2GB';
-        ALTER SYSTEM SET checkpoint_completion_target = '0.9';
+        ALTER SYSTEM SET checkpoint_completion_target = '0.7';
         ALTER SYSTEM SET wal_buffers = '16MB';
         ALTER SYSTEM SET default_statistics_target = '100';
         ALTER SYSTEM SET random_page_cost = '4';
         ALTER SYSTEM SET effective_io_concurrency = '2';
-        ALTER SYSTEM SET max_worker_processes = '4';
-        ALTER SYSTEM SET max_parallel_workers_per_gather = '2';
-        ALTER SYSTEM SET max_parallel_workers = '4';
+        ALTER SYSTEM SET max_worker_processes = '8';
+        ALTER SYSTEM SET max_parallel_workers_per_gather = '4';
+        ALTER SYSTEM SET max_parallel_workers = '4'; # 8 or 4 ?
 EOF
     echo "Database setup completed. Restarting server in foreground:"
 
