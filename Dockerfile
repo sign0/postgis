@@ -97,6 +97,6 @@ RUN mkdir -p /postgresql/$POSTGRES_VERSION/main \
 
 EXPOSE 5432
 
-VOLUME ["/postgresql/$POSTGRES_VERSION/main", "/postgresql/$POSTGRES_VERSION/ssl"]
+#VOLUME ["/postgresql/$POSTGRES_VERSION/main", "/postgresql/$POSTGRES_VERSION/ssl"]
 
 CMD /scripts/db_start.sh
